@@ -1,7 +1,7 @@
 import time
 import psutil
 from terminaltables import AsciiTable
-from .base_meter import BaseMeter
+from meters.base_meter import BaseMeter
 
 
 class NetMeter(BaseMeter):
