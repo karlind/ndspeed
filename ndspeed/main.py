@@ -13,7 +13,7 @@ from scheduler import Scheduler
 def main():
     scheduler = Scheduler(interval=1)
 
-    net_meter = NetMeter(nic=['enp3s0'])
+    net_meter = NetMeter()
     scheduler.add_meter(net_meter)
 
     scheduler.loop()

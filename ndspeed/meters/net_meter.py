@@ -27,7 +27,12 @@ class NetMeter(BaseMeter):
     def get_meter_table(self):
         result_dict = self._get_meter_result()
         table_data = [['NIC', 'Download', 'Upload']]
-        for net_name in self.nic_list:
+
+        if len(self.nic_list) == 0:
+            nic_list = sorted(result_dict.keys())
+        else:
+            nic_list = self.nic_list
+        for net_name in nic_list:
             net_info = result_dict[net_name]
             download_speed = f'{net_info["formated_recv"]:6.1f} {net_info["formated_recv_unit"]:2}/s'
             upload_speed = f'{net_info["formated_sent"]:6.1f} {net_info["formated_sent_unit"]:2}/s'
