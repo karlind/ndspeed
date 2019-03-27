@@ -18,5 +18,8 @@ setup(
     install_requires = [
         'psutil',
         'terminaltables',
-    ]
+    ],
+    entry_points = {
+        'console_scripts': ['ndspeed=ndspeed.main:main'],
+    }
 )

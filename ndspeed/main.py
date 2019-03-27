@@ -1,3 +1,11 @@
+import os
+import sys
+
+
+app_home_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(app_home_dir)
+
+
 from meters.net_meter import NetMeter
 from scheduler import Scheduler
 
@@ -10,4 +18,6 @@ def main():
 
     scheduler.loop()
 
-main()
+
+if __name__=='__main__':
+    main()
