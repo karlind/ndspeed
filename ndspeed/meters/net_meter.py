@@ -10,12 +10,6 @@ class NetMeter(BaseMeter):
         self.meter_name = name if name else self.__class__.__name__
         self.nic_list = nic.copy()
 
-    def wait(self, time_to_wait):
-        self._start()
-        time.sleep(time_to_wait)
-        self._end()
-        return self._handle()
-
     def start(self):
         self.start_time = time.time()
         self.counter1 = psutil.net_io_counters(pernic=True)
