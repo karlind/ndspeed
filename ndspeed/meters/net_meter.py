@@ -10,7 +10,7 @@ class NetMeter(BaseMeter):
         self.meter_name = name if name else self.__class__.__name__
 
         all_nic_list = self.get_all_nic()
-        if len(nic_list)==0:
+        if nic_list is None or len(nic_list)==0:
             self.nic_list = all_nic_list
         else:
             self.nic_list = []
