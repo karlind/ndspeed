@@ -5,10 +5,24 @@ from meters.base_meter import BaseMeter
 
 
 class NetMeter(BaseMeter):
-    def __init__(self, name=None, nic=[]):
+    def __init__(self, name=None, nic_list=[]):
         super().__init__()
         self.meter_name = name if name else self.__class__.__name__
-        self.nic_list = nic.copy()
+
+        all_nic_list = self.get_all_nic()
+        if len(nic_list)==0:
+            self.nic_list = all_nic_list
+        else:
+            self.nic_list = []
+            for net_name in nic_list:
+                assert net_name in all_nic_list
+                self.nic_list.append(net_name)
+
+    @staticmethod
+    def get_all_nic():
+        counter = psutil.net_io_counters(pernic=True)
+        nic_list = sorted(counter.keys())
+        return nic_list
 
     def start(self):
         self.start_time = time.time()
@@ -22,11 +36,7 @@ class NetMeter(BaseMeter):
         result_dict = self._get_meter_result()
         table_data = [['NIC', 'Download', 'Upload']]
 
-        if len(self.nic_list) == 0:
-            nic_list = sorted(result_dict.keys())
-        else:
-            nic_list = self.nic_list
-        for net_name in nic_list:
+        for net_name in self.nic_list:
             net_info = result_dict[net_name]
             download_speed = f'{net_info["formated_recv"]:6.1f} {net_info["formated_recv_unit"]:2}/s'
             upload_speed = f'{net_info["formated_sent"]:6.1f} {net_info["formated_sent_unit"]:2}/s'
